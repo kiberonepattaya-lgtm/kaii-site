@@ -479,6 +479,7 @@ let obstacles = [];
 let coins = [];
 let trees = [];
 let dustParticles = [];
+let sideTilt = 0;
 
 // Balanced lane picker - keeps a short history so no lane goes noticeably empty
 let recentLanes = [];
@@ -551,6 +552,8 @@ function handleSwipe() {
 function moveLeft() {
   if (player.lane > 0 && !player.sliding && !player.jumping) {
     player.lane--;
+    sideTilt = -1;
+    spawnDust(player.x, player.y + player.h, 6);
     checkCollision();
   }
 }
@@ -558,6 +561,8 @@ function moveLeft() {
 function moveRight() {
   if (player.lane < 2 && !player.sliding && !player.jumping) {
     player.lane++;
+    sideTilt = 1;
+    spawnDust(player.x, player.y + player.h, 6);
     checkCollision();
   }
 }
@@ -733,6 +738,10 @@ function update() {
     p.life -= 0.045;
     if (p.life <= 0) dustParticles.splice(i, 1);
   }
+
+  // DECAY SIDE-STEP TILT
+  sideTilt *= 0.8;
+  if (Math.abs(sideTilt) < 0.02) sideTilt = 0;
 
   if (player.sliding) {
     player.sliding_timer--;
@@ -1189,6 +1198,12 @@ function render() {
     ctx.translate(player.x, player.y + player.h);
     ctx.scale(1 / stretch, stretch);
     ctx.translate(-player.x, -(player.y + player.h));
+  }
+
+  if (sideTilt !== 0) {
+    ctx.translate(player.x, player.y + player.h * 0.5);
+    ctx.rotate(sideTilt * 0.25);
+    ctx.translate(-player.x, -(player.y + player.h * 0.5));
   }
 
   drawSkin(player.x, player.y, currentSkinIndex);
