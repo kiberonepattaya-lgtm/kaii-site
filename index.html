@@ -4,6 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
 <title>Animal Run</title>
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA2NCA2NCI+CjxyZWN0IHdpZHRoPSI2NCIgaGVpZ2h0PSI2NCIgcng9IjE0IiBmaWxsPSIjM2Y4YTNhIi8+CjxnIGZpbGw9IiMzYTJlMmUiPgo8ZWxsaXBzZSBjeD0iMzIiIGN5PSI0MSIgcng9IjE1IiByeT0iMTIiLz4KPGNpcmNsZSBjeD0iMTMiIGN5PSIyNSIgcj0iNy41Ii8+CjxjaXJjbGUgY3g9IjI3IiBjeT0iMTMiIHI9IjcuNSIvPgo8Y2lyY2xlIGN4PSI0MSIgY3k9IjEzIiByPSI3LjUiLz4KPGNpcmNsZSBjeD0iNTMiIGN5PSIyNSIgcj0iNy41Ii8+CjwvZz4KPGcgZmlsbD0iI2ZmZjVlNiI+CjxlbGxpcHNlIGN4PSIzMiIgY3k9IjQxIiByeD0iMTEuNSIgcnk9IjkiLz4KPGNpcmNsZSBjeD0iMTMiIGN5PSIyNSIgcj0iNS4yIi8+CjxjaXJjbGUgY3g9IjI3IiBjeT0iMTMiIHI9IjUuMiIvPgo8Y2lyY2xlIGN4PSI0MSIgY3k9IjEzIiByPSI1LjIiLz4KPGNpcmNsZSBjeD0iNTMiIGN5PSIyNSIgcj0iNS4yIi8+CjwvZz4KPC9zdmc+Cg==">
 <style>
   * { margin: 0; padding: 0; box-sizing: border-box; }
   html {
@@ -829,6 +830,21 @@ function roundRect(c, x, y, w, h, r) {
   c.closePath();
 }
 
+// flat meadow tuft, like the small dark-green ticks in the reference art
+function drawGrassTuft(x, y, size, lean, color) {
+  ctx.strokeStyle = color;
+  ctx.lineWidth = Math.max(1, size * 0.16);
+  ctx.lineCap = 'round';
+  ctx.beginPath();
+  ctx.moveTo(x - size * 0.3, y + size * 0.4);
+  ctx.quadraticCurveTo(x - size * 0.35 + lean * 0.3, y - size * 0.1, x - size * 0.15 + lean, y - size * 0.7);
+  ctx.moveTo(x, y + size * 0.4);
+  ctx.quadraticCurveTo(x + lean * 0.15, y - size * 0.15, x + lean * 0.4, y - size * 0.85);
+  ctx.moveTo(x + size * 0.3, y + size * 0.4);
+  ctx.quadraticCurveTo(x + size * 0.35 + lean * 0.3, y - size * 0.05, x + size * 0.2 + lean, y - size * 0.6);
+  ctx.stroke();
+}
+
 
 function bodyAndHead(c, color) {
   c.fillStyle = OUTLINE;
@@ -989,50 +1005,31 @@ function drawSkin(x, y, skinIdx) {
 }
 
 function render() {
-  const gradient = ctx.createLinearGradient(0, 0, 0, H);
-  gradient.addColorStop(0, '#1f4a1a');
-  gradient.addColorStop(0.5, '#3f8a3a');
-  gradient.addColorStop(1, '#1f4a1a');
-  ctx.fillStyle = gradient;
+  ctx.fillStyle = '#72a83f';
   ctx.fillRect(0, 0, W, H);
 
-  // REALISTIC GRASS TEXTURE - scattered blades covering the whole field
-  const grassSpacing = 34;
-  const scrollY = (frame * gameSpeed) % grassSpacing;
-  const rows = Math.ceil(H / grassSpacing) + 2;
+  // MEADOW TEXTURE (tufts + flowers), matching 5.png reference.
+  // worldY grows without ever wrapping, so each tuft/flower moves smoothly
+  // down the screen instead of resetting position every tile cycle.
+  const grassSpacing = 44;
+  const worldY = frame * gameSpeed;
   const cols = Math.ceil(W / grassSpacing) + 1;
-  ctx.lineCap = 'round';
-  for (let row = -1; row < rows; row++) {
-    const baseY = row * grassSpacing - scrollY;
+  const rowStart = Math.floor(-worldY / grassSpacing) - 1;
+  const rowEnd = Math.ceil((H - worldY) / grassSpacing) + 1;
+
+  for (let row = rowStart; row <= rowEnd; row++) {
+    const baseY = row * grassSpacing + worldY;
     for (let col = 0; col < cols; col++) {
-      const seed = ((row * 928371 + col * 55317) % 1000) / 1000;
-      const seed2 = ((row * 12841 + col * 7331 + 419) % 1000) / 1000;
-      const seed3 = ((row * 3187 + col * 91721 + 77) % 1000) / 1000;
+      const seed = (((row * 928371 + col * 55317) % 1000 + 1000) % 1000) / 1000;
+      const seed2 = (((row * 12841 + col * 7331 + 419) % 1000 + 1000) % 1000) / 1000;
+      const seed3 = (((row * 3187 + col * 91721 + 77) % 1000 + 1000) % 1000) / 1000;
       const x = col * grassSpacing + seed * grassSpacing;
       const y = baseY + seed2 * grassSpacing;
-      const lean = (seed3 - 0.5) * 10;
-      const bh = 9 + seed2 * 8;
-      ctx.strokeStyle = seed > 0.6 ? 'rgba(64,140,45,0.55)' : (seed > 0.3 ? 'rgba(90,175,60,0.5)' : 'rgba(150,225,110,0.45)');
-      ctx.lineWidth = 1.6 + seed3;
-      ctx.beginPath();
-      ctx.moveTo(x, y + bh * 0.5);
-      ctx.quadraticCurveTo(x + lean * 0.5, y, x + lean, y - bh);
-      ctx.stroke();
-    }
-  }
+      const lean = (seed3 - 0.5) * 8;
 
-  // small dark patches for depth/variation
-  for (let row = -1; row < rows; row++) {
-    const baseY = row * grassSpacing - scrollY;
-    for (let col = 0; col < cols; col += 3) {
-      const seed = ((row * 4271 + col * 8123) % 1000) / 1000;
-      if (seed > 0.75) continue;
-      const x = col * grassSpacing + seed * grassSpacing;
-      const y = baseY + seed * grassSpacing;
-      ctx.fillStyle = 'rgba(20,50,15,0.12)';
-      ctx.beginPath();
-      ctx.ellipse(x, y, 10, 5, 0, 0, Math.PI * 2);
-      ctx.fill();
+      if (seed3 < 0.25) {
+        drawGrassTuft(x, y, 12 + seed2 * 8, lean, 'rgba(94,150,55,0.75)');
+      }
     }
   }
 
@@ -1060,8 +1057,8 @@ function render() {
     ctx.save();
     ctx.translate(cx, cy);
     const bw = obs.w, bh = obs.h;
-    const r = bw * 0.36;
-    const base = bh * 0.32;
+    const r = bw * 0.62;
+    const base = bh * 0.42;
 
     ctx.fillStyle = OUTLINE;
     ctx.beginPath(); ctx.arc(0, base, r + 2, 0, Math.PI * 2); ctx.fill();
