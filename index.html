@@ -478,6 +478,7 @@ const lanes = [85, 200, 315];
 let obstacles = [];
 let coins = [];
 let trees = [];
+let dustParticles = [];
 
 // Balanced lane picker - keeps a short history so no lane goes noticeably empty
 let recentLanes = [];
@@ -548,16 +549,31 @@ function handleSwipe() {
 }
 
 function moveLeft() {
-  if (player.lane > 0 && !player.sliding) {
+  if (player.lane > 0 && !player.sliding && !player.jumping) {
     player.lane--;
     checkCollision();
   }
 }
 
 function moveRight() {
-  if (player.lane < 2 && !player.sliding) {
+  if (player.lane < 2 && !player.sliding && !player.jumping) {
     player.lane++;
     checkCollision();
+  }
+}
+
+function spawnDust(x, y, count) {
+  for (let i = 0; i < count; i++) {
+    const angle = Math.PI + Math.random() * Math.PI; // spread upward-ish, away from ground
+    const speed = 1 + Math.random() * 2.5;
+    dustParticles.push({
+      x: x + (Math.random() - 0.5) * 16,
+      y: y,
+      vx: Math.cos(angle) * speed,
+      vy: Math.sin(angle) * speed * 0.6,
+      life: 1,
+      size: 3 + Math.random() * 3
+    });
   }
 }
 
@@ -565,6 +581,7 @@ function jump() {
   if (!player.jumping && !player.sliding) {
     player.jumping = true;
     player.jumping_velocity = -10;
+    spawnDust(player.x, player.y + player.h, 9);
   }
 }
 
@@ -703,7 +720,18 @@ function update() {
       player.y = H - 150;
       player.jumping = false;
       player.jumping_velocity = 0;
+      spawnDust(player.x, player.y + player.h, 12);
     }
+  }
+
+  // UPDATE DUST PARTICLES
+  for (let i = dustParticles.length - 1; i >= 0; i--) {
+    const p = dustParticles[i];
+    p.x += p.vx;
+    p.y += p.vy;
+    p.vy += 0.15;
+    p.life -= 0.045;
+    if (p.life <= 0) dustParticles.splice(i, 1);
   }
 
   if (player.sliding) {
@@ -1132,11 +1160,35 @@ function render() {
     ctx.fill();
   }
 
+  // JUMP SHADOW - shrinks and fades the higher the player gets off the ground
+  const groundY = H - 150;
+  const jumpHeight = Math.max(0, groundY - player.y);
+  const shadowScale = Math.max(0.35, 1 - jumpHeight / 110);
+  ctx.fillStyle = `rgba(0,0,0,${0.28 * shadowScale})`;
+  ctx.beginPath();
+  ctx.ellipse(player.x, groundY + player.h + 4, 16 * shadowScale, 6 * shadowScale, 0, 0, Math.PI * 2);
+  ctx.fill();
+
+  // DUST PARTICLES - burst on takeoff and landing
+  for (const p of dustParticles) {
+    ctx.fillStyle = `rgba(224,204,164,${p.life * 0.6})`;
+    ctx.beginPath();
+    ctx.arc(p.x, p.y, p.size * p.life, 0, Math.PI * 2);
+    ctx.fill();
+  }
+
   // PLAYER - With skins
   ctx.save();
 
   if (player.sliding) {
     ctx.globalAlpha = 0.8;
+  }
+
+  if (player.jumping) {
+    const stretch = Math.min(1.15, 1 + jumpHeight / 400);
+    ctx.translate(player.x, player.y + player.h);
+    ctx.scale(1 / stretch, stretch);
+    ctx.translate(-player.x, -(player.y + player.h));
   }
 
   drawSkin(player.x, player.y, currentSkinIndex);
