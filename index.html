@@ -209,7 +209,7 @@
     cursor: pointer;
     margin-top: 15px;
   }
-  #gameOver {
+  #gameOver, #startMenu {
     position: absolute;
     top: 0;
     left: 0;
@@ -223,18 +223,23 @@
     gap: 20px;
     z-index: 100;
   }
-  #gameOver.show { display: flex; }
-  #gameOver h1 {
+  #gameOver.show, #startMenu.show { display: flex; }
+  #gameOver h1, #startMenu h1 {
     color: #39e67a;
     font-size: 56px;
     text-shadow: 2px 2px 16px rgba(51, 204, 255, 0.5);
   }
-  #gameOver p {
+  #gameOver p, #startMenu p {
     color: #7be495;
     font-size: 20px;
     font-weight: bold;
   }
-  #gameOver button {
+  #startMenu .hint {
+    color: rgba(255, 255, 255, 0.7);
+    font-size: 14px;
+    font-weight: normal;
+  }
+  #gameOver button, #startMenu button {
     padding: 12px 40px;
     font-size: 18px;
     font-weight: bold;
@@ -245,16 +250,16 @@
     border-radius: 8px;
     box-shadow: 0 0 12px rgba(34, 197, 94, 0.7);
   }
-  #gameOver button:hover {
+  #gameOver button:hover, #startMenu button:hover {
     background: #4ade80;
   }
-  #gameOver button.secondary {
+  #gameOver button.secondary, #startMenu button.secondary {
     background: transparent;
     border: 2px solid #39e67a;
     color: #39e67a;
     box-shadow: none;
   }
-  #gameOver button.secondary:hover {
+  #gameOver button.secondary:hover, #startMenu button.secondary:hover {
     background: rgba(57, 230, 122, 0.25);
   }
   #pauseMenu {
@@ -323,7 +328,7 @@
       touch-action: manipulation;
     }
     #closeShop,
-    #gameOver button, #pauseMenu button {
+    #gameOver button, #pauseMenu button, #startMenu button {
       padding: 16px 40px;
       font-size: 18px;
       touch-action: manipulation;
@@ -393,8 +398,15 @@
     <p>High Score: <span id="gameOverHigh">0</span></p>
     <p>Coins: <span id="earnedCoins">0</span></p>
     <p>Total Coins: <span id="totalCoins">0</span></p>
-    <button onclick="location.reload()">PLAY AGAIN</button>
+    <button onclick="restartGame()">PLAY AGAIN</button>
     <button class="secondary" onclick="toggleShop()">CLOSET</button>
+  </div>
+  <div id="startMenu" class="show">
+    <h1>ANIMAL RUN</h1>
+    <p>High Score: <span id="startHigh">0</span></p>
+    <button onclick="startGame()">PLAY</button>
+    <button class="secondary" onclick="toggleShop()">CLOSET</button>
+    <p class="hint">Press SPACE to play</p>
   </div>
 </div>
 
@@ -447,7 +459,7 @@ const skins = [
 ];
 
 // GAME STATE
-let gameState = 'playing';
+let gameState = 'menu';
 let score = 0;
 let collectedCoins = 0;
 let totalCoins = parseInt(localStorage.getItem('totalCoins')) || 0;
@@ -523,7 +535,16 @@ document.addEventListener('mouseup', e => {
 });
 
 window.addEventListener('keydown', e => {
+  if (e.key === ' ') {
+    e.preventDefault();
+    if (gameState === 'menu') startGame();
+    else if (gameState === 'gameover') restartGame();
+    else if (gameState === 'paused') togglePause();
+    else if (gameState === 'playing') jump();
+    return;
+  }
   if (e.key === 'p' || e.key === 'P' || e.key === 'Escape') {
+    e.preventDefault();
     togglePause();
     return;
   }
@@ -603,6 +624,12 @@ function checkCollision() {
       endGame();
     }
   }
+}
+
+function startGame() {
+  if (gameState !== 'menu') return;
+  gameState = 'playing';
+  document.getElementById('startMenu').classList.remove('show');
 }
 
 function toggleShop() {
@@ -709,6 +736,33 @@ function endGame() {
   document.getElementById('earnedCoins').textContent = collectedCoins;
   document.getElementById('totalCoins').textContent = totalCoins;
   document.getElementById('gameOver').classList.add('show');
+}
+
+function restartGame() {
+  score = 0;
+  collectedCoins = 0;
+  multiplier = 1;
+  distance = 0;
+  frame = 0;
+  gameSpeed = 9;
+
+  obstacles = [];
+  coins = [];
+  trees = [];
+  dustParticles = [];
+  sideTilt = 0;
+  recentLanes = [];
+
+  player.lane = 1;
+  player.x = lanes[player.lane];
+  player.y = H - 150;
+  player.jumping = false;
+  player.jumping_velocity = 0;
+  player.sliding = false;
+  player.sliding_timer = 0;
+
+  document.getElementById('gameOver').classList.remove('show');
+  gameState = 'playing';
 }
 
 function update() {
@@ -1230,6 +1284,7 @@ window.addEventListener('load', () => {
   }
   const savedSkin = localStorage.getItem('currentSkin');
   if (savedSkin) currentSkinIndex = parseInt(savedSkin);
+  document.getElementById('startHigh').textContent = highScore;
 });
 
 // Save skins when purchased
