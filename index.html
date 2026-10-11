@@ -841,6 +841,48 @@
     color: #e4defa;
   }
 
+  /* Secret codes list (top left) */
+  #codesBox {
+    position: fixed;
+    top: 8px;
+    left: 8px;
+    z-index: 15;
+    padding: 8px 12px;
+    font-family: 'Courier New', Consolas, monospace;
+    font-size: 0.8rem;
+    line-height: 1.5;
+    color: #ffffff;
+    background: rgba(0, 0, 0, 0.72);
+    border: 1px solid rgba(255, 255, 255, 0.4);
+    border-radius: 6px;
+    backdrop-filter: blur(3px);
+  }
+
+  #codesBox b {
+    display: block;
+    margin-bottom: 2px;
+    font-size: 0.7rem;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    opacity: 0.7;
+  }
+
+  #codesBox button {
+    display: block;
+    width: 100%;
+    margin: 2px 0 0;
+    padding: 2px 8px;
+    font: inherit;
+    text-align: left;
+    color: inherit;
+    background: rgba(255, 255, 255, 0.12);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    border-radius: 4px;
+    cursor: pointer;
+  }
+
+  #codesBox button:hover { background: rgba(255, 255, 255, 0.3); }
+
   /* Infinity Gauntlet snap */
   #gauntlet {
     position: fixed;
@@ -1126,6 +1168,12 @@
 
   <footer>Kaii</footer>
 
+  <div id="codesBox">
+    <b>Codes</b>
+    <button type="button" data-code="67">67</button>
+    <button type="button" data-code="blue lock">blue lock</button>
+    <button type="button" data-code="endgame">endgame</button>
+  </div>
   <div id="flashOverlay"></div>
   <div id="gauntlet"><img src="infi.png" alt=""></div>
 
@@ -1185,6 +1233,27 @@
     var siteSearch = document.getElementById('siteSearch');
     var flashOverlay = document.getElementById('flashOverlay');
     var transitioning = false;
+
+    // Codes box: sits under the header, click a code to enter it in the search bar
+    (function () {
+      var box = document.getElementById('codesBox');
+      var hdr = document.querySelector('header');
+      function place() {
+        var r = hdr.getBoundingClientRect();
+        box.style.top = (Math.max(r.bottom, 0) + 8) + 'px';
+      }
+      place();
+      window.addEventListener('scroll', place);
+      window.addEventListener('resize', place);
+      setInterval(place, 300);
+      box.addEventListener('click', function (e) {
+        var code = e.target.getAttribute && e.target.getAttribute('data-code');
+        if (!code) return;
+        var input = document.getElementById('siteSearch');
+        input.value = code;
+        input.dispatchEvent(new Event('input', { bubbles: true }));
+      });
+    })();
 
     function playSnapTransition() {
       transitioning = true;
