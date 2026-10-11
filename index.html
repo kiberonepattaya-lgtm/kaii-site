@@ -841,6 +841,45 @@
     color: #e4defa;
   }
 
+  /* Infinity Gauntlet snap */
+  #gauntlet {
+    position: fixed;
+    inset: 0;
+    z-index: 2500;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    pointer-events: none;
+    opacity: 0;
+    background: radial-gradient(circle at 50% 50%, rgba(20, 8, 60, 0.35), rgba(0, 0, 0, 0.85));
+    transition: opacity 0.5s ease;
+  }
+
+  #gauntlet.show { opacity: 1; }
+
+  #gauntlet img {
+    height: min(78vh, 620px);
+    width: auto;
+    transform: translateY(90px) scale(0.8);
+    filter: drop-shadow(0 0 30px rgba(255, 190, 60, 0.55));
+    transition: transform 0.9s cubic-bezier(0.2, 0.8, 0.2, 1);
+  }
+
+  #gauntlet.show img { transform: none; }
+  #gauntlet.snapped { animation: snapFlash 0.6s ease-out; }
+  #gauntlet.snapped img { animation: gauntletSnap 0.4s ease-out; }
+
+  @keyframes gauntletSnap {
+    0%   { transform: none; filter: drop-shadow(0 0 30px rgba(255, 190, 60, 0.55)); }
+    30%  { transform: rotate(-7deg) scale(1.08); filter: brightness(2.2) drop-shadow(0 0 70px #fff); }
+    100% { transform: none; filter: drop-shadow(0 0 30px rgba(255, 190, 60, 0.55)); }
+  }
+
+  @keyframes snapFlash {
+    0%   { background: rgba(255, 255, 255, 0.95); }
+    100% { background: radial-gradient(circle at 50% 50%, rgba(20, 8, 60, 0.35), rgba(0, 0, 0, 0.85)); }
+  }
+
   /* The Snap: everything turns to dust, then the theme rebuilds */
   body.snap header, body.snap footer, body.snap main > * {
     animation: snapDust 1.5s ease-in forwards !important;
@@ -1088,6 +1127,7 @@
   <footer>Kaii</footer>
 
   <div id="flashOverlay"></div>
+  <div id="gauntlet"><img src="infi.png" alt=""></div>
 
   <div id="bossIntro">
     <div class="n6">6</div>
@@ -1149,22 +1189,29 @@
     function playSnapTransition() {
       transitioning = true;
       siteSearch.blur();
-      document.body.classList.add('snap');
+      var gauntlet = document.getElementById('gauntlet');
+      gauntlet.classList.add('show');
       setTimeout(function () {
-        flashOverlay.style.background = 'radial-gradient(circle at 50% 40%, #fff6d0 0%, #f2b632 45%, #7a2cff 100%)';
+        gauntlet.classList.add('snapped');
+        document.body.classList.add('snap');
+      }, 1100);
+      setTimeout(function () { gauntlet.classList.remove('show'); }, 2500);
+      setTimeout(function () {
+        flashOverlay.style.background = 'radial-gradient(circle at 50% 40%, #ece6ff 0%, #8b6bff 45%, #e03ccf 100%)';
         flashOverlay.classList.add('on');
-      }, 1300);
+      }, 2750);
       setTimeout(function () {
         document.body.classList.remove('snap', 'bluelock');
         document.body.classList.add('endgame', 'rebuild');
         siteSearch.value = '';
-      }, 1650);
-      setTimeout(function () { flashOverlay.classList.remove('on'); }, 1800);
+      }, 3050);
+      setTimeout(function () { flashOverlay.classList.remove('on'); }, 3200);
       setTimeout(function () {
+        gauntlet.classList.remove('snapped');
         document.body.classList.remove('rebuild');
         flashOverlay.style.background = '';
         transitioning = false;
-      }, 3000);
+      }, 4400);
     }
 
     function playGoalTransition() {
