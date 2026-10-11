@@ -238,12 +238,12 @@
   }
 
 
-  /* Bob pink theme */
+  /* Hacker terminal theme */
   :root {
-    --g: #ff8fb8;
-    --g-dim: #c9648a;
-    --g-bg: #1f0d17;
-    --g-panel: #3a2433;
+    --g: #5dff3a;
+    --g-dim: #2fa81c;
+    --g-bg: #041a07;
+    --g-panel: #062a0c;
   }
 
   html, body, #tungBtn {
@@ -252,8 +252,8 @@
 
   body {
     background:
-      repeating-linear-gradient(0deg, rgba(255, 143, 184, 0.05) 0 1px, transparent 1px 4px),
-      radial-gradient(circle at 50% 20%, #4a1f35 0%, #1f0d17 70%) fixed;
+      repeating-linear-gradient(0deg, rgba(93, 255, 58, 0.05) 0 1px, transparent 1px 4px),
+      radial-gradient(circle at 50% 20%, #0a3d12 0%, #041a07 70%) fixed;
     color: var(--g);
   }
 
@@ -261,7 +261,7 @@
     background: var(--g-panel);
     color: var(--g);
     border-bottom: 2px solid var(--g);
-    box-shadow: 0 0 18px rgba(255, 143, 184, 0.45);
+    box-shadow: 0 0 18px rgba(93, 255, 58, 0.45);
   }
 
   footer {
@@ -279,14 +279,14 @@
 
   nav a {
     color: var(--g);
-    text-shadow: 0 0 6px rgba(255, 143, 184, 0.7);
+    text-shadow: 0 0 6px rgba(93, 255, 58, 0.7);
     border: 1px solid var(--g-dim);
     border-radius: 0;
   }
 
   nav a:hover {
     background: var(--g);
-    color: #1f0d17;
+    color: #041a07;
     text-shadow: none;
     box-shadow: 0 0 12px var(--g);
   }
@@ -301,23 +301,23 @@
     background: var(--g-panel);
     border: 2px solid var(--g);
     border-radius: 0;
-    box-shadow: 0 0 14px rgba(255, 143, 184, 0.6);
+    box-shadow: 0 0 14px rgba(93, 255, 58, 0.6);
   }
 
   #tungBtn:active {
-    box-shadow: 0 0 5px rgba(255, 143, 184, 0.6);
+    box-shadow: 0 0 5px rgba(93, 255, 58, 0.6);
   }
 
   #tungMessage, #funMessage {
-    color: #ffd1e3;
+    color: #b8ff9f;
     text-shadow: 0 0 10px var(--g);
   }
 
   #funPic {
     border: 3px solid var(--g);
     border-radius: 0;
-    box-shadow: 0 0 18px rgba(255, 143, 184, 0.6);
-    filter: sepia(0.3) hue-rotate(300deg) saturate(1.4) brightness(0.95);
+    box-shadow: 0 0 18px rgba(93, 255, 58, 0.6);
+    filter: sepia(0.4) hue-rotate(60deg) saturate(1.6) brightness(0.9);
   }
 
   section, #hobbies {
@@ -325,7 +325,7 @@
     color: var(--g);
     border: 2px solid var(--g);
     border-radius: 0;
-    box-shadow: 0 0 16px rgba(255, 143, 184, 0.4), inset 0 0 18px rgba(255, 143, 184, 0.12);
+    box-shadow: 0 0 16px rgba(93, 255, 58, 0.4), inset 0 0 18px rgba(93, 255, 58, 0.12);
     clip-path: polygon(0 14px, 14px 0, 100% 0, 100% calc(100% - 14px), calc(100% - 14px) 100%, 0 100%);
   }
 
@@ -339,11 +339,11 @@
   section h2::before { content: "> "; }
 
   section p, #hobbies p {
-    color: #ffd1e3;
+    color: #a6ff8c;
   }
 
   #hobbies {
-    background: #4a1f35;
+    background: #0a3d12;
   }
 
   /* Search bar + goal transition */
@@ -365,7 +365,7 @@
     background: var(--g-panel);
     border: 2px solid var(--g);
     border-radius: 0;
-    box-shadow: 0 0 14px rgba(255, 143, 184, 0.45);
+    box-shadow: 0 0 14px rgba(93, 255, 58, 0.45);
     outline: none;
     transition: transform 0.5s ease, opacity 0.4s ease;
   }
@@ -659,6 +659,212 @@
     color: #eaf2ff;
   }
 
+  /* ===== Avengers: Endgame theme ===== */
+  body.endgame {
+    --gold: #f2b632;
+    --gold-hi: #ffe08a;
+    --purple: #7a2cff;
+    --panel: #120a24;
+    font-family: 'Barlow', 'Trebuchet MS', sans-serif;
+    color: #f3eaff;
+    background:
+      radial-gradient(1.5px 1.5px at 12% 18%, #fff, transparent 60%),
+      radial-gradient(1px 1px at 78% 12%, #ffe08a, transparent 60%),
+      radial-gradient(1.5px 1.5px at 44% 66%, #fff, transparent 60%),
+      radial-gradient(1px 1px at 90% 74%, #fff, transparent 60%),
+      radial-gradient(1px 1px at 28% 88%, #ffe08a, transparent 60%),
+      radial-gradient(1px 1px at 62% 36%, #fff, transparent 60%),
+      radial-gradient(ellipse at 80% 0%, rgba(122, 44, 255, 0.45), transparent 55%),
+      radial-gradient(ellipse at 10% 100%, rgba(242, 182, 50, 0.22), transparent 50%),
+      linear-gradient(180deg, #07040f 0%, #12082a 100%) fixed;
+  }
+
+  body.endgame header .logo,
+  body.endgame nav a,
+  body.endgame h1,
+  body.endgame h2,
+  body.endgame #tungBtn,
+  body.endgame #tungMessage,
+  body.endgame #funMessage {
+    font-family: 'Bebas Neue', Impact, 'Arial Narrow Bold', sans-serif;
+    text-transform: uppercase;
+    font-weight: normal;
+  }
+
+  body.endgame header {
+    padding: 24px 50px;
+    background: linear-gradient(90deg, #0b0618, #1d0d3d 50%, #0b0618);
+    border-bottom: 3px solid var(--gold);
+    box-shadow: 0 4px 30px rgba(242, 182, 50, 0.45), 0 0 60px rgba(122, 44, 255, 0.35);
+  }
+
+  body.endgame header .logo {
+    font-size: 2.8rem;
+    letter-spacing: 8px;
+    color: var(--gold-hi);
+    text-shadow: 0 0 16px var(--gold), 0 0 34px rgba(242, 182, 50, 0.6);
+  }
+
+  body.endgame header .logo::before { content: none; }
+
+  body.endgame nav ul { gap: 30px; }
+
+  body.endgame nav a {
+    font-size: 1.5rem;
+    letter-spacing: 3px;
+    color: var(--gold-hi);
+    text-shadow: none;
+    border: 1px solid var(--gold);
+    border-radius: 0;
+    padding: 6px 20px;
+  }
+
+  body.endgame nav a:hover {
+    background: var(--gold);
+    color: #1a0b00;
+    box-shadow: 0 0 20px var(--gold), 0 0 40px rgba(242, 182, 50, 0.5);
+  }
+
+  body.endgame footer {
+    background: #0b0618;
+    color: var(--gold-hi);
+    border-top: 3px solid var(--gold);
+    box-shadow: 0 -4px 30px rgba(242, 182, 50, 0.3);
+    text-shadow: 0 0 8px var(--gold);
+    letter-spacing: 6px;
+  }
+
+  body.endgame h1 {
+    font-size: 5.2rem;
+    letter-spacing: 10px;
+    background: linear-gradient(180deg, #fff3c4 0%, #f2b632 55%, #b36b00 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    text-shadow: none;
+    filter: drop-shadow(0 0 18px rgba(242, 182, 50, 0.7));
+  }
+
+  /* Six Infinity Stones */
+  body.endgame h1::after {
+    content: "";
+    display: block;
+    width: 228px;
+    height: 24px;
+    margin: 10px auto 0;
+    background:
+      radial-gradient(circle, #a64bff 0 8px, transparent 9px) 0 0 / 38px 24px repeat-x;
+    filter: drop-shadow(0 0 6px #fff);
+    animation: stoneHue 6s linear infinite;
+  }
+
+  @keyframes stoneHue {
+    from { filter: drop-shadow(0 0 6px #fff) hue-rotate(0deg); }
+    to { filter: drop-shadow(0 0 6px #fff) hue-rotate(360deg); }
+  }
+
+  body.endgame main > p {
+    font-size: 1.4rem;
+    color: #e6d9ff;
+    line-height: 1.5;
+  }
+
+  body.endgame #siteSearch {
+    background: var(--panel);
+    color: var(--gold-hi);
+    border-color: var(--gold);
+    box-shadow: 0 0 18px rgba(242, 182, 50, 0.5);
+  }
+
+  body.endgame #siteSearch::placeholder { color: #a98a45; }
+
+  body.endgame #tungBtn {
+    font-size: 1.8rem;
+    letter-spacing: 4px;
+    color: #1a0b00;
+    background: linear-gradient(180deg, #ffe08a, #f2b632 60%, #b36b00);
+    border: none;
+    border-radius: 0;
+    padding: 18px 46px;
+    box-shadow: none;
+    filter: drop-shadow(0 0 12px rgba(242, 182, 50, 0.7));
+    clip-path: polygon(14px 0, 100% 0, calc(100% - 14px) 100%, 0 100%);
+  }
+
+  body.endgame #tungBtn:active { background: var(--purple); color: #fff; }
+
+  body.endgame #tungMessage,
+  body.endgame #funMessage {
+    color: var(--gold-hi);
+    letter-spacing: 3px;
+    text-shadow: 0 0 14px var(--gold), 0 0 30px rgba(122, 44, 255, 0.8);
+  }
+
+  body.endgame #funPic {
+    filter: contrast(1.1) saturate(0.8) sepia(0.25);
+    border: 3px solid var(--gold);
+    border-radius: 0;
+    box-shadow: 0 0 26px rgba(242, 182, 50, 0.7), 0 0 50px rgba(122, 44, 255, 0.4);
+  }
+
+  body.endgame section,
+  body.endgame #hobbies {
+    background: linear-gradient(135deg, #160a2e, #0d0719);
+    color: #f3eaff;
+    border: 1px solid rgba(242, 182, 50, 0.5);
+    border-left: 8px solid var(--gold);
+    border-radius: 0;
+    box-shadow: 0 0 26px rgba(122, 44, 255, 0.35), inset 0 0 30px rgba(242, 182, 50, 0.06);
+    margin-top: 40px;
+    padding: 28px 34px;
+    max-width: 680px;
+    clip-path: none;
+  }
+
+  body.endgame section h2,
+  body.endgame #hobbies h2 {
+    font-size: 2.3rem;
+    letter-spacing: 4px;
+    color: var(--gold-hi);
+    text-shadow: 0 0 12px rgba(242, 182, 50, 0.8);
+    border-bottom: 1px solid var(--gold);
+    margin-bottom: 16px;
+    padding-bottom: 8px;
+  }
+
+  body.endgame section h2::before { content: "\2605  "; color: var(--gold); }
+
+  body.endgame section p,
+  body.endgame #hobbies p {
+    font-size: 1.25rem;
+    line-height: 1.6;
+    color: #e6d9ff;
+  }
+
+  /* The Snap: everything turns to dust, then the theme rebuilds */
+  body.snap header, body.snap footer, body.snap main > * {
+    animation: snapDust 1.5s ease-in forwards !important;
+  }
+  body.snap main > *:nth-child(2n) { animation-delay: 0.15s !important; }
+  body.snap main > *:nth-child(3n) { animation-delay: 0.3s !important; }
+  body.snap main > *:nth-child(5n) { animation-delay: 0.45s !important; }
+  body.snap footer { animation-delay: 0.25s !important; }
+
+  @keyframes snapDust {
+    0%   { opacity: 1; filter: none; transform: none; }
+    35%  { opacity: 0.9; filter: sepia(1) saturate(3) blur(1px); }
+    100% { opacity: 0; filter: sepia(1) blur(10px); transform: translate(70px, -50px) rotate(6deg) scale(1.04); }
+  }
+
+  body.rebuild header, body.rebuild footer, body.rebuild main > * {
+    animation: snapIn 1s ease-out both;
+  }
+
+  @keyframes snapIn {
+    0%   { opacity: 0; filter: blur(10px) brightness(2); transform: translateY(14px); }
+    100% { opacity: 1; filter: none; transform: none; }
+  }
+
   /* ===== 67 boss fight ===== */
   #bossIntro {
     position: fixed;
@@ -913,6 +1119,27 @@
     var flashOverlay = document.getElementById('flashOverlay');
     var transitioning = false;
 
+    function playSnapTransition() {
+      transitioning = true;
+      siteSearch.blur();
+      document.body.classList.add('snap');
+      setTimeout(function () {
+        flashOverlay.style.background = 'radial-gradient(circle at 50% 40%, #fff6d0 0%, #f2b632 45%, #7a2cff 100%)';
+        flashOverlay.classList.add('on');
+      }, 1300);
+      setTimeout(function () {
+        document.body.classList.remove('snap', 'bluelock');
+        document.body.classList.add('endgame', 'rebuild');
+        siteSearch.value = '';
+      }, 1650);
+      setTimeout(function () { flashOverlay.classList.remove('on'); }, 1800);
+      setTimeout(function () {
+        document.body.classList.remove('rebuild');
+        flashOverlay.style.background = '';
+        transitioning = false;
+      }, 3000);
+    }
+
     function playGoalTransition() {
       transitioning = true;
       siteSearch.blur();
@@ -922,7 +1149,7 @@
         searchWrap.classList.add('hit');
         flashOverlay.classList.add('on');
       }, 1500);
-      setTimeout(function () { document.body.classList.add('bluelock'); }, 1750);
+      setTimeout(function () { document.body.classList.remove('endgame'); document.body.classList.add('bluelock'); }, 1750);
       setTimeout(function () { flashOverlay.classList.remove('on'); }, 1900);
       setTimeout(function () {
         searchWrap.classList.remove('scoring', 'shoot', 'hit');
@@ -1423,6 +1650,10 @@
           siteSearch.value = '';
           transitioning = false;
         });
+        return;
+      }
+      if (q === 'endgame') {
+        if (!document.body.classList.contains('endgame')) playSnapTransition();
         return;
       }
       if (document.body.classList.contains('bluelock')) return;
