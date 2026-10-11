@@ -841,6 +841,18 @@
     color: #e4defa;
   }
 
+  /* Endgame wide banner image at the very top */
+  #egHero { display: none; }
+
+  body.endgame #egHero {
+    display: block;
+    width: 100%;
+    height: auto;
+    background: #000;
+    border-bottom: 3px solid #8b6bff;
+    box-shadow: 0 6px 40px rgba(139, 107, 255, 0.6);
+  }
+
   /* Endgame top banner (only visible in the Endgame theme) */
   #egBanner { display: none; }
 
@@ -1052,6 +1064,7 @@
 </head>
 <body>
 
+  <img id="egHero" src="avengers-banner.jpg" alt="Avengers: Endgame">
   <a id="egBanner" href="https://www.imdb.com/title/tt4154796/" target="_blank" rel="noopener">Avengers: Endgame (2019) &middot; View on IMDb</a>
 
   <header>
