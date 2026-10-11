@@ -841,6 +841,25 @@
     color: #e6d9ff;
   }
 
+  /* Endgame top banner (only visible in the Endgame theme) */
+  #egBanner { display: none; }
+
+  body.endgame #egBanner {
+    display: block;
+    padding: 10px 20px;
+    text-align: center;
+    text-decoration: none;
+    font-family: 'Bebas Neue', Impact, 'Arial Narrow Bold', sans-serif;
+    font-size: 1.3rem;
+    letter-spacing: 6px;
+    text-transform: uppercase;
+    color: #1a0b00;
+    background: linear-gradient(90deg, #b36b00, #ffe08a 50%, #b36b00);
+    box-shadow: 0 0 24px rgba(242, 182, 50, 0.7);
+  }
+
+  body.endgame #egBanner:hover { filter: brightness(1.15); }
+
   /* The Snap: everything turns to dust, then the theme rebuilds */
   body.snap header, body.snap footer, body.snap main > * {
     animation: snapDust 1.5s ease-in forwards !important;
@@ -1009,6 +1028,8 @@
 </style>
 </head>
 <body>
+
+  <a id="egBanner" href="https://www.imdb.com/title/tt4154796/" target="_blank" rel="noopener">Avengers: Endgame (2019) &middot; View on IMDb</a>
 
   <header>
     <div class="logo">Kaiiii</div>
