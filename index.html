@@ -800,67 +800,6 @@
     margin: 4px;
     cursor: pointer;
   }
-
-  /* Bob the cute circle */
-  #bob {
-    position: relative;
-    width: 120px;
-    height: 120px;
-    margin: 24px auto;
-    border-radius: 50%;
-    background: radial-gradient(circle at 35% 30%, #ffd1e3, #ff8fb8);
-    box-shadow: 0 8px 18px rgba(255, 105, 160, 0.35);
-    animation: bobBounce 1.6s ease-in-out infinite;
-  }
-  #bob .eye {
-    position: absolute;
-    top: 42px;
-    width: 14px;
-    height: 18px;
-    border-radius: 50%;
-    background: #3a2433;
-  }
-  #bob .eye::after {
-    content: "";
-    position: absolute;
-    top: 3px;
-    left: 3px;
-    width: 5px;
-    height: 5px;
-    border-radius: 50%;
-    background: #fff;
-  }
-  #bob .eye.l { left: 31px; }
-  #bob .eye.r { right: 31px; }
-  #bob .cheek {
-    position: absolute;
-    top: 66px;
-    width: 18px;
-    height: 10px;
-    border-radius: 50%;
-    background: rgba(255, 70, 120, 0.35);
-  }
-  #bob .cheek.l { left: 14px; }
-  #bob .cheek.r { right: 14px; }
-  #bob .mouth {
-    position: absolute;
-    top: 66px;
-    left: 50%;
-    width: 18px;
-    height: 10px;
-    margin-left: -9px;
-    border-bottom: 3px solid #3a2433;
-    border-radius: 0 0 18px 18px;
-  }
-  #bobName {
-    text-align: center;
-    font-weight: bold;
-    margin-bottom: 24px;
-  }
-  @keyframes bobBounce {
-    0%, 100% { transform: translateY(0) scale(1, 1); }
-    50% { transform: translateY(-14px) scale(0.97, 1.03); }
-  }
 </style>
 </head>
 <body>
@@ -896,15 +835,6 @@
     <div id="tungMessage">Tung Tung Tung a stick made of wood</div>
     <img id="funPic" src="https://i.redd.it/mvohcvejpif21.jpg" alt="Fun picture">
     <div id="funMessage"></div>
-
-    <div id="bob" aria-label="Bob the circle">
-      <div class="eye l"></div>
-      <div class="eye r"></div>
-      <div class="cheek l"></div>
-      <div class="cheek r"></div>
-      <div class="mouth"></div>
-    </div>
-    <div id="bobName">Bob</div>
 
     <section id="about">
       <h2>About Me</h2>
