@@ -238,12 +238,12 @@
   }
 
 
-  /* Hacker terminal theme */
+  /* Bob pink theme */
   :root {
-    --g: #5dff3a;
-    --g-dim: #2fa81c;
-    --g-bg: #041a07;
-    --g-panel: #062a0c;
+    --g: #ff8fb8;
+    --g-dim: #c9648a;
+    --g-bg: #1f0d17;
+    --g-panel: #3a2433;
   }
 
   html, body, #tungBtn {
@@ -252,8 +252,8 @@
 
   body {
     background:
-      repeating-linear-gradient(0deg, rgba(93, 255, 58, 0.05) 0 1px, transparent 1px 4px),
-      radial-gradient(circle at 50% 20%, #0a3d12 0%, #041a07 70%) fixed;
+      repeating-linear-gradient(0deg, rgba(255, 143, 184, 0.05) 0 1px, transparent 1px 4px),
+      radial-gradient(circle at 50% 20%, #4a1f35 0%, #1f0d17 70%) fixed;
     color: var(--g);
   }
 
@@ -261,7 +261,7 @@
     background: var(--g-panel);
     color: var(--g);
     border-bottom: 2px solid var(--g);
-    box-shadow: 0 0 18px rgba(93, 255, 58, 0.45);
+    box-shadow: 0 0 18px rgba(255, 143, 184, 0.45);
   }
 
   footer {
@@ -279,14 +279,14 @@
 
   nav a {
     color: var(--g);
-    text-shadow: 0 0 6px rgba(93, 255, 58, 0.7);
+    text-shadow: 0 0 6px rgba(255, 143, 184, 0.7);
     border: 1px solid var(--g-dim);
     border-radius: 0;
   }
 
   nav a:hover {
     background: var(--g);
-    color: #041a07;
+    color: #1f0d17;
     text-shadow: none;
     box-shadow: 0 0 12px var(--g);
   }
@@ -301,23 +301,23 @@
     background: var(--g-panel);
     border: 2px solid var(--g);
     border-radius: 0;
-    box-shadow: 0 0 14px rgba(93, 255, 58, 0.6);
+    box-shadow: 0 0 14px rgba(255, 143, 184, 0.6);
   }
 
   #tungBtn:active {
-    box-shadow: 0 0 5px rgba(93, 255, 58, 0.6);
+    box-shadow: 0 0 5px rgba(255, 143, 184, 0.6);
   }
 
   #tungMessage, #funMessage {
-    color: #b8ff9f;
+    color: #ffd1e3;
     text-shadow: 0 0 10px var(--g);
   }
 
   #funPic {
     border: 3px solid var(--g);
     border-radius: 0;
-    box-shadow: 0 0 18px rgba(93, 255, 58, 0.6);
-    filter: sepia(0.4) hue-rotate(60deg) saturate(1.6) brightness(0.9);
+    box-shadow: 0 0 18px rgba(255, 143, 184, 0.6);
+    filter: sepia(0.3) hue-rotate(300deg) saturate(1.4) brightness(0.95);
   }
 
   section, #hobbies {
@@ -325,7 +325,7 @@
     color: var(--g);
     border: 2px solid var(--g);
     border-radius: 0;
-    box-shadow: 0 0 16px rgba(93, 255, 58, 0.4), inset 0 0 18px rgba(93, 255, 58, 0.12);
+    box-shadow: 0 0 16px rgba(255, 143, 184, 0.4), inset 0 0 18px rgba(255, 143, 184, 0.12);
     clip-path: polygon(0 14px, 14px 0, 100% 0, 100% calc(100% - 14px), calc(100% - 14px) 100%, 0 100%);
   }
 
@@ -339,11 +339,11 @@
   section h2::before { content: "> "; }
 
   section p, #hobbies p {
-    color: #a6ff8c;
+    color: #ffd1e3;
   }
 
   #hobbies {
-    background: #0a3d12;
+    background: #4a1f35;
   }
 
   /* Search bar + goal transition */
@@ -365,7 +365,7 @@
     background: var(--g-panel);
     border: 2px solid var(--g);
     border-radius: 0;
-    box-shadow: 0 0 14px rgba(93, 255, 58, 0.45);
+    box-shadow: 0 0 14px rgba(255, 143, 184, 0.45);
     outline: none;
     transition: transform 0.5s ease, opacity 0.4s ease;
   }
