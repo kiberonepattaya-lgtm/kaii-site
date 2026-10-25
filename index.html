@@ -1282,6 +1282,64 @@
     0%, 100% { transform: scale(1); opacity: 1; }
     50% { transform: scale(1.25); opacity: 0.7; }
   }
+
+  /* ===== Soap rain ===== */
+  #soapLayer {
+    position: fixed;
+    inset: 0;
+    z-index: 2600;
+    overflow: hidden;
+    pointer-events: none;
+  }
+
+  #soapLayer .soap {
+    position: absolute;
+    top: -80px;
+    cursor: pointer;
+    pointer-events: auto;
+    user-select: none;
+    animation: soapFall linear forwards;
+  }
+
+  @keyframes soapFall {
+    from { transform: translateY(0) rotate(0deg); }
+    to { transform: translateY(calc(100vh + 120px)) rotate(540deg); }
+  }
+
+  #soapText {
+    position: fixed;
+    top: 40%;
+    left: 50%;
+    z-index: 2700;
+    transform: translate(-50%, -50%);
+    font-family: Impact, 'Arial Black', sans-serif;
+    font-size: clamp(2rem, 7vw, 5rem);
+    letter-spacing: 4px;
+    text-align: center;
+    color: #ffffff;
+    text-shadow: 0 0 20px #00e5ff, 3px 3px 0 #0077aa;
+    pointer-events: none;
+    animation: soapTextPulse 0.8s ease-in-out infinite;
+  }
+
+  @keyframes soapTextPulse {
+    0%, 100% { transform: translate(-50%, -50%) scale(1) rotate(-3deg); }
+    50% { transform: translate(-50%, -50%) scale(1.1) rotate(3deg); }
+  }
+
+  html.soapSlip {
+    overflow: hidden;
+    animation: soapSlip 1.8s ease-in-out;
+  }
+
+  @keyframes soapSlip {
+    0%   { transform: none; }
+    15%  { transform: translateX(-40px) rotate(-12deg); }
+    45%  { transform: rotateX(180deg) rotate(15deg); }
+    75%  { transform: rotateX(360deg) rotate(-10deg) translateY(30px); }
+    90%  { transform: rotate(4deg); }
+    100% { transform: none; }
+  }
 </style>
 </head>
 <body>
@@ -1345,6 +1403,7 @@
     <button type="button" data-code="67">67</button>
     <button type="button" data-code="blue lock">blue lock</button>
     <button type="button" data-code="endgame">endgame</button>
+    <button type="button" data-code="soap">soap</button>
   </div>
   <div id="flashOverlay"></div>
   <div id="gauntlet"><img src="infi.png" alt=""></div>
@@ -1955,9 +2014,52 @@
       document.getElementById('bossRetry').addEventListener('click', function () { resetGame(); });
     })();
 
+    /* ===== Soap rain ===== */
+    var soapActive = false;
+    function playSoapRain() {
+      if (soapActive) return;
+      soapActive = true;
+      siteSearch.blur();
+      siteSearch.value = '';
+      var layer = document.createElement('div');
+      layer.id = 'soapLayer';
+      var text = document.createElement('div');
+      text.id = 'soapText';
+      text.textContent = '🧼 TRY NOT TO SLIP! 🧼';
+      document.body.appendChild(layer);
+      document.body.appendChild(text);
+
+      var slipping = false;
+      function slip() {
+        if (slipping) return;
+        slipping = true;
+        var root = document.documentElement;
+        root.classList.add('soapSlip');
+        setTimeout(function () { root.classList.remove('soapSlip'); slipping = false; }, 1850);
+      }
+
+      function drop() {
+        var s = document.createElement('div');
+        s.className = 'soap';
+        s.textContent = '🧼';
+        s.style.left = (Math.random() * 96) + '%';
+        s.style.fontSize = (32 + Math.random() * 44) + 'px';
+        s.style.animationDuration = (2.5 + Math.random() * 3) + 's';
+        s.addEventListener('pointerdown', function () { s.remove(); slip(); });
+        s.addEventListener('animationend', function () { s.remove(); });
+        layer.appendChild(s);
+      }
+
+      var timer = setInterval(drop, 140);
+      setTimeout(function () { clearInterval(timer); }, 15000);
+      setTimeout(function () { text.remove(); }, 15000);
+      setTimeout(function () { layer.remove(); soapActive = false; }, 21000);
+    }
+
     siteSearch.addEventListener('input', function () {
       if (transitioning) return;
       var q = siteSearch.value.trim().toLowerCase();
+      if (q === 'soap') { playSoapRain(); return; }
       if (q === '67') {
         transitioning = true;
         siteSearch.blur();
